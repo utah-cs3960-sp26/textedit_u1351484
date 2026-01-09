@@ -1,5 +1,7 @@
 # R1
 
+![TextEdit Screenshot](images/image.png)
+
 ## Core Editing
 
 Built on PyQt6's `QPlainTextEdit` with all the basics working: text editing, undo/redo, cut/copy/paste, and some nice extras like duplicate line (Ctrl+Shift+D), delete line (Ctrl+Shift+K), and move lines up/down (Alt+Up/Down). Uses Menlo font with 4-space tabs.
