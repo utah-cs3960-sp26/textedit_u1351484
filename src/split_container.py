@@ -25,6 +25,16 @@ class SplitContainer(QWidget):
         layout.setSpacing(0)
         
         self.root_splitter = QSplitter(Qt.Orientation.Horizontal)
+        # Make the splitter handle more visible and easier to grab
+        self.root_splitter.setHandleWidth(4)
+        self.root_splitter.setStyleSheet("""
+            QSplitter::handle {
+                background-color: #555;
+            }
+            QSplitter::handle:hover {
+                background-color: #0078d4;
+            }
+        """)
         layout.addWidget(self.root_splitter)
         
         initial_tabs = self._create_tab_widget()
@@ -149,6 +159,16 @@ class SplitContainer(QWidget):
             self._balance_splitter(parent)
         else:
             new_splitter = QSplitter(orientation)
+            # Style the new splitter
+            new_splitter.setHandleWidth(4)
+            new_splitter.setStyleSheet("""
+                QSplitter::handle {
+                    background-color: #555;
+                }
+                QSplitter::handle:hover {
+                    background-color: #0078d4;
+                }
+            """)
             
             if isinstance(parent, QSplitter):
                 index = parent.indexOf(current_tabs)

@@ -7,7 +7,7 @@ from PyQt6.QtWidgets import (
     QMainWindow, QVBoxLayout, QWidget, QStatusBar,
     QMenuBar, QMenu, QMessageBox, QInputDialog
 )
-from PyQt6.QtGui import QAction, QKeySequence
+from PyQt6.QtGui import QAction, QKeySequence, QFont
 from PyQt6.QtCore import Qt
 
 from .split_container import SplitContainer
