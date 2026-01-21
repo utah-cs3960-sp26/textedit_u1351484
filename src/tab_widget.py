@@ -12,7 +12,6 @@ class EditorTabWidget(QTabWidget):
     
     current_editor_changed = pyqtSignal(object)
     all_tabs_closed = pyqtSignal()
-    file_loaded = pyqtSignal()  # Signal when a file is loaded
     
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -83,7 +82,6 @@ class EditorTabWidget(QTabWidget):
             editor = self.widget(i)
             if editor.file_path == file_path:
                 self.setCurrentIndex(i)
-                self.file_loaded.emit()  # Emit signal when switching to existing file
                 return editor
         
         current = self.current_editor()
@@ -92,13 +90,9 @@ class EditorTabWidget(QTabWidget):
             not current.toPlainText()):
             if current.load_file(file_path):
                 self._update_tab_title(current)
-                self.file_loaded.emit()  # Emit signal after file loaded
                 return current
         
-        result = self.new_tab(file_path)
-        if result:
-            self.file_loaded.emit()  # Emit signal after new tab with file
-        return result
+        return self.new_tab(file_path)
     
     def save_current(self) -> bool:
         """Save the current file."""

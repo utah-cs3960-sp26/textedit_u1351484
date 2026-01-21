@@ -11,7 +11,6 @@ class SplitContainer(QWidget):
     
     current_editor_changed = pyqtSignal(object)
     active_tabs_changed = pyqtSignal(object)
-    file_loaded = pyqtSignal()  # Signal when a file is loaded
     
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -26,6 +25,16 @@ class SplitContainer(QWidget):
         layout.setSpacing(0)
         
         self.root_splitter = QSplitter(Qt.Orientation.Horizontal)
+        # Make the splitter handle more visible and easier to grab
+        self.root_splitter.setHandleWidth(4)
+        self.root_splitter.setStyleSheet("""
+            QSplitter::handle {
+                background-color: #555;
+            }
+            QSplitter::handle:hover {
+                background-color: #0078d4;
+            }
+        """)
         layout.addWidget(self.root_splitter)
         
         initial_tabs = self._create_tab_widget()
@@ -37,7 +46,6 @@ class SplitContainer(QWidget):
         tabs = EditorTabWidget()
         tabs.current_editor_changed.connect(self._on_editor_changed)
         tabs.all_tabs_closed.connect(lambda: self._on_all_tabs_closed(tabs))
-        tabs.file_loaded.connect(self.file_loaded.emit)  # Forward file loaded signal
         
         tabs.focusInEvent = lambda e, t=tabs: self._on_tabs_focused(t, e)
         
@@ -151,6 +159,16 @@ class SplitContainer(QWidget):
             self._balance_splitter(parent)
         else:
             new_splitter = QSplitter(orientation)
+            # Style the new splitter
+            new_splitter.setHandleWidth(4)
+            new_splitter.setStyleSheet("""
+                QSplitter::handle {
+                    background-color: #555;
+                }
+                QSplitter::handle:hover {
+                    background-color: #0078d4;
+                }
+            """)
             
             if isinstance(parent, QSplitter):
                 index = parent.indexOf(current_tabs)
